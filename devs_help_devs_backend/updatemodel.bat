@@ -1,0 +1,2 @@
+call gq https://hasura-63b34375.nhost.app/v1/graphql -H "X-Hasura-Admin-Secret: devshelpdevs" -H "x-hasura-role: applicant"     --introspect > graphql/schema.graphql &
+call flutter pub run build_runner build
