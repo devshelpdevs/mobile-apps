@@ -1,0 +1,35 @@
+targets:
+  $default:
+    sources:
+        - graphql/**
+        - lib/**
+    builders:
+      artemis:
+        options:
+          schema_mapping:
+            - output: lib/src/graphql/graphql_api.dart
+              schema: graphql/schema.graphql
+              queries_glob: lib/src/**.graphql
+              naming_scheme: simple
+          custom_parser_import: 'package:devs_help_devs_backend/src/converters.dart'   
+          scalar_mapping:
+          - graphql_type: uuid
+            dart_type: String
+            use_custom_parser: true
+          - graphql_type: date
+            dart_type: DateTime
+            use_custom_parser: true
+          # - graphql_type: timestamptz
+          #   dart_type: DateTime
+          #   use_custom_parser: false
+          # - graphql_type: jsonb
+          #   dart_type: DateTime
+          #   use_custom_parser: false
+          # - graphql_type: citext
+          #   dart_type: String
+          #   use_custom_parser: false
+            
+            
+            
+          
+          

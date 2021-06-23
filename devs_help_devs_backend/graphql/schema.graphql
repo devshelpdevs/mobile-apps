@@ -1,0 +1,1065 @@
+schema {
+  query: query_root
+  mutation: mutation_root
+  subscription: subscription_root
+}
+
+"""
+expression to compare columns of type Boolean. All fields are combined with logical 'AND'.
+"""
+input Boolean_comparison_exp {
+  _eq: Boolean
+  _gt: Boolean
+  _gte: Boolean
+  _in: [Boolean!]
+  _is_null: Boolean
+  _lt: Boolean
+  _lte: Boolean
+  _neq: Boolean
+  _nin: [Boolean!]
+}
+
+"""
+expression to compare columns of type String. All fields are combined with logical 'AND'.
+"""
+input String_comparison_exp {
+  _eq: String
+  _gt: String
+  _gte: String
+  _ilike: String
+  _in: [String!]
+  _is_null: Boolean
+  _like: String
+  _lt: String
+  _lte: String
+  _neq: String
+  _nilike: String
+  _nin: [String!]
+  _nlike: String
+  _nsimilar: String
+  _similar: String
+}
+
+"""
+columns and relationships of "auth.account_roles"
+"""
+type auth_account_roles {
+  """An object relationship"""
+  account: auth_accounts!
+  account_id: uuid!
+  created_at: timestamptz!
+  id: uuid!
+  role: String!
+
+  """An object relationship"""
+  roleByRole: auth_roles!
+}
+
+"""
+Boolean expression to filter rows from the table "auth.account_roles". All fields are combined with a logical 'AND'.
+"""
+input auth_account_roles_bool_exp {
+  _and: [auth_account_roles_bool_exp]
+  _not: auth_account_roles_bool_exp
+  _or: [auth_account_roles_bool_exp]
+  account: auth_accounts_bool_exp
+  account_id: uuid_comparison_exp
+  created_at: timestamptz_comparison_exp
+  id: uuid_comparison_exp
+  role: String_comparison_exp
+  roleByRole: auth_roles_bool_exp
+}
+
+"""
+ordering options when selecting data from "auth.account_roles"
+"""
+input auth_account_roles_order_by {
+  account: auth_accounts_order_by
+  account_id: order_by
+  created_at: order_by
+  id: order_by
+  role: order_by
+  roleByRole: auth_roles_order_by
+}
+
+"""
+primary key columns input for table: "auth.account_roles"
+"""
+input auth_account_roles_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "auth.account_roles"
+"""
+enum auth_account_roles_select_column {
+  """column name"""
+  account_id
+
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  role
+}
+
+"""
+columns and relationships of "auth.accounts"
+"""
+type auth_accounts {
+  """An array relationship"""
+  account_roles(
+    """distinct select on columns"""
+    distinct_on: [auth_account_roles_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [auth_account_roles_order_by!]
+
+    """filter the rows returned"""
+    where: auth_account_roles_bool_exp
+  ): [auth_account_roles!]!
+  active: Boolean!
+  created_at: timestamptz!
+  default_role: String!
+  email: citext
+  id: uuid!
+  mfa_enabled: Boolean!
+
+  """An object relationship"""
+  role: auth_roles!
+  updated_at: timestamptz!
+
+  """An object relationship"""
+  user: users!
+  user_id: uuid!
+}
+
+"""
+Boolean expression to filter rows from the table "auth.accounts". All fields are combined with a logical 'AND'.
+"""
+input auth_accounts_bool_exp {
+  _and: [auth_accounts_bool_exp]
+  _not: auth_accounts_bool_exp
+  _or: [auth_accounts_bool_exp]
+  account_roles: auth_account_roles_bool_exp
+  active: Boolean_comparison_exp
+  created_at: timestamptz_comparison_exp
+  default_role: String_comparison_exp
+  email: citext_comparison_exp
+  id: uuid_comparison_exp
+  mfa_enabled: Boolean_comparison_exp
+  role: auth_roles_bool_exp
+  updated_at: timestamptz_comparison_exp
+  user: users_bool_exp
+  user_id: uuid_comparison_exp
+}
+
+"""
+ordering options when selecting data from "auth.accounts"
+"""
+input auth_accounts_order_by {
+  active: order_by
+  created_at: order_by
+  default_role: order_by
+  email: order_by
+  id: order_by
+  mfa_enabled: order_by
+  role: auth_roles_order_by
+  updated_at: order_by
+  user: users_order_by
+  user_id: order_by
+}
+
+"""
+primary key columns input for table: "auth.accounts"
+"""
+input auth_accounts_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "auth.accounts"
+"""
+enum auth_accounts_select_column {
+  """column name"""
+  active
+
+  """column name"""
+  created_at
+
+  """column name"""
+  default_role
+
+  """column name"""
+  email
+
+  """column name"""
+  id
+
+  """column name"""
+  mfa_enabled
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  user_id
+}
+
+"""
+columns and relationships of "auth.roles"
+"""
+type auth_roles {
+  """An array relationship"""
+  account_roles(
+    """distinct select on columns"""
+    distinct_on: [auth_account_roles_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [auth_account_roles_order_by!]
+
+    """filter the rows returned"""
+    where: auth_account_roles_bool_exp
+  ): [auth_account_roles!]!
+
+  """An array relationship"""
+  accounts(
+    """distinct select on columns"""
+    distinct_on: [auth_accounts_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [auth_accounts_order_by!]
+
+    """filter the rows returned"""
+    where: auth_accounts_bool_exp
+  ): [auth_accounts!]!
+  role: String!
+}
+
+"""
+Boolean expression to filter rows from the table "auth.roles". All fields are combined with a logical 'AND'.
+"""
+input auth_roles_bool_exp {
+  _and: [auth_roles_bool_exp]
+  _not: auth_roles_bool_exp
+  _or: [auth_roles_bool_exp]
+  account_roles: auth_account_roles_bool_exp
+  accounts: auth_accounts_bool_exp
+  role: String_comparison_exp
+}
+
+"""
+ordering options when selecting data from "auth.roles"
+"""
+input auth_roles_order_by {
+  role: order_by
+}
+
+"""
+primary key columns input for table: "auth.roles"
+"""
+input auth_roles_pk_columns_input {
+  role: String!
+}
+
+"""
+select columns of table "auth.roles"
+"""
+enum auth_roles_select_column {
+  """column name"""
+  role
+}
+
+scalar citext
+
+"""
+expression to compare columns of type citext. All fields are combined with logical 'AND'.
+"""
+input citext_comparison_exp {
+  _eq: citext
+  _gt: citext
+  _gte: citext
+  _ilike: String
+  _in: [citext!]
+  _is_null: Boolean
+  _like: String
+  _lt: citext
+  _lte: citext
+  _neq: citext
+  _nilike: String
+  _nin: [citext!]
+  _nlike: String
+  _nsimilar: String
+  _similar: String
+}
+
+scalar date
+
+"""
+expression to compare columns of type date. All fields are combined with logical 'AND'.
+"""
+input date_comparison_exp {
+  _eq: date
+  _gt: date
+  _gte: date
+  _in: [date!]
+  _is_null: Boolean
+  _lt: date
+  _lte: date
+  _neq: date
+  _nin: [date!]
+}
+
+"""mutation root"""
+type mutation_root {
+  """
+  delete data from the table: "person"
+  """
+  delete_person(
+    """filter the rows which have to be deleted"""
+    where: person_bool_exp!
+  ): person_mutation_response
+
+  """
+  delete single row from the table: "person"
+  """
+  delete_person_by_pk(person_id: uuid!): person
+
+  """
+  delete data from the table: "users"
+  """
+  delete_users(
+    """filter the rows which have to be deleted"""
+    where: users_bool_exp!
+  ): users_mutation_response
+
+  """
+  delete single row from the table: "users"
+  """
+  delete_users_by_pk(id: uuid!): users
+
+  """
+  insert data into the table: "person"
+  """
+  insert_person(
+    """the rows to be inserted"""
+    objects: [person_insert_input!]!
+  ): person_mutation_response
+
+  """
+  insert a single row into the table: "person"
+  """
+  insert_person_one(
+    """the row to be inserted"""
+    object: person_insert_input!
+  ): person
+
+  """
+  insert data into the table: "users"
+  """
+  insert_users(
+    """the rows to be inserted"""
+    objects: [users_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: users_on_conflict
+  ): users_mutation_response
+
+  """
+  insert a single row into the table: "users"
+  """
+  insert_users_one(
+    """the row to be inserted"""
+    object: users_insert_input!
+
+    """on conflict condition"""
+    on_conflict: users_on_conflict
+  ): users
+
+  """
+  update data of the table: "users"
+  """
+  update_users(
+    """sets the columns of the filtered rows to the given values"""
+    _set: users_set_input
+
+    """filter the rows which have to be updated"""
+    where: users_bool_exp!
+  ): users_mutation_response
+
+  """
+  update single row of the table: "users"
+  """
+  update_users_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: users_set_input
+    pk_columns: users_pk_columns_input!
+  ): users
+}
+
+"""column ordering options"""
+enum order_by {
+  """in the ascending order, nulls last"""
+  asc
+
+  """in the ascending order, nulls first"""
+  asc_nulls_first
+
+  """in the ascending order, nulls last"""
+  asc_nulls_last
+
+  """in the descending order, nulls first"""
+  desc
+
+  """in the descending order, nulls first"""
+  desc_nulls_first
+
+  """in the descending order, nulls last"""
+  desc_nulls_last
+}
+
+"""
+columns and relationships of "person"
+"""
+type person {
+  created_at: date!
+  first_name: String!
+  github_url: String
+
+  """was verified by the staff"""
+  is_verified: Boolean!
+  last_name: String!
+  linkedin_url: String
+  national_id_num: String!
+  person_id: uuid!
+  phone_number: String!
+  photo_id: uuid
+  town_id: uuid
+  twitter_url: String
+
+  """An object relationship"""
+  user: users
+  user_id: uuid
+  verification_token: String
+  verified_by: uuid
+}
+
+"""
+input type for inserting array relation for remote table "person"
+"""
+input person_arr_rel_insert_input {
+  data: [person_insert_input!]!
+}
+
+"""
+Boolean expression to filter rows from the table "person". All fields are combined with a logical 'AND'.
+"""
+input person_bool_exp {
+  _and: [person_bool_exp]
+  _not: person_bool_exp
+  _or: [person_bool_exp]
+  created_at: date_comparison_exp
+  first_name: String_comparison_exp
+  github_url: String_comparison_exp
+  is_verified: Boolean_comparison_exp
+  last_name: String_comparison_exp
+  linkedin_url: String_comparison_exp
+  national_id_num: String_comparison_exp
+  person_id: uuid_comparison_exp
+  phone_number: String_comparison_exp
+  photo_id: uuid_comparison_exp
+  town_id: uuid_comparison_exp
+  twitter_url: String_comparison_exp
+  user: users_bool_exp
+  user_id: uuid_comparison_exp
+  verification_token: String_comparison_exp
+  verified_by: uuid_comparison_exp
+}
+
+"""
+input type for inserting data into table "person"
+"""
+input person_insert_input {
+  created_at: date
+  first_name: String
+  github_url: String
+  is_verified: Boolean
+  last_name: String
+  linkedin_url: String
+  national_id_num: String
+  person_id: uuid
+  phone_number: String
+  photo_id: uuid
+  town_id: uuid
+  twitter_url: String
+  user: users_obj_rel_insert_input
+  user_id: uuid
+  verification_token: String
+  verified_by: uuid
+}
+
+"""
+response of any mutation on the table "person"
+"""
+type person_mutation_response {
+  """number of affected rows by the mutation"""
+  affected_rows: Int!
+
+  """data of the affected rows by the mutation"""
+  returning: [person!]!
+}
+
+"""
+input type for inserting object relation for remote table "person"
+"""
+input person_obj_rel_insert_input {
+  data: person_insert_input!
+}
+
+"""
+ordering options when selecting data from "person"
+"""
+input person_order_by {
+  created_at: order_by
+  first_name: order_by
+  github_url: order_by
+  is_verified: order_by
+  last_name: order_by
+  linkedin_url: order_by
+  national_id_num: order_by
+  person_id: order_by
+  phone_number: order_by
+  photo_id: order_by
+  town_id: order_by
+  twitter_url: order_by
+  user: users_order_by
+  user_id: order_by
+  verification_token: order_by
+  verified_by: order_by
+}
+
+"""
+primary key columns input for table: "person"
+"""
+input person_pk_columns_input {
+  person_id: uuid!
+}
+
+"""
+select columns of table "person"
+"""
+enum person_select_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  first_name
+
+  """column name"""
+  github_url
+
+  """column name"""
+  is_verified
+
+  """column name"""
+  last_name
+
+  """column name"""
+  linkedin_url
+
+  """column name"""
+  national_id_num
+
+  """column name"""
+  person_id
+
+  """column name"""
+  phone_number
+
+  """column name"""
+  photo_id
+
+  """column name"""
+  town_id
+
+  """column name"""
+  twitter_url
+
+  """column name"""
+  user_id
+
+  """column name"""
+  verification_token
+
+  """column name"""
+  verified_by
+}
+
+"""query root"""
+type query_root {
+  """
+  fetch data from the table: "auth.account_roles"
+  """
+  auth_account_roles(
+    """distinct select on columns"""
+    distinct_on: [auth_account_roles_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [auth_account_roles_order_by!]
+
+    """filter the rows returned"""
+    where: auth_account_roles_bool_exp
+  ): [auth_account_roles!]!
+
+  """
+  fetch data from the table: "auth.account_roles" using primary key columns
+  """
+  auth_account_roles_by_pk(id: uuid!): auth_account_roles
+
+  """
+  fetch data from the table: "auth.accounts"
+  """
+  auth_accounts(
+    """distinct select on columns"""
+    distinct_on: [auth_accounts_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [auth_accounts_order_by!]
+
+    """filter the rows returned"""
+    where: auth_accounts_bool_exp
+  ): [auth_accounts!]!
+
+  """fetch data from the table: "auth.accounts" using primary key columns"""
+  auth_accounts_by_pk(id: uuid!): auth_accounts
+
+  """
+  fetch data from the table: "auth.roles"
+  """
+  auth_roles(
+    """distinct select on columns"""
+    distinct_on: [auth_roles_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [auth_roles_order_by!]
+
+    """filter the rows returned"""
+    where: auth_roles_bool_exp
+  ): [auth_roles!]!
+
+  """fetch data from the table: "auth.roles" using primary key columns"""
+  auth_roles_by_pk(role: String!): auth_roles
+
+  """
+  fetch data from the table: "person"
+  """
+  person(
+    """distinct select on columns"""
+    distinct_on: [person_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [person_order_by!]
+
+    """filter the rows returned"""
+    where: person_bool_exp
+  ): [person!]!
+
+  """fetch data from the table: "person" using primary key columns"""
+  person_by_pk(person_id: uuid!): person
+
+  """
+  fetch data from the table: "users"
+  """
+  users(
+    """distinct select on columns"""
+    distinct_on: [users_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [users_order_by!]
+
+    """filter the rows returned"""
+    where: users_bool_exp
+  ): [users!]!
+
+  """fetch data from the table: "users" using primary key columns"""
+  users_by_pk(id: uuid!): users
+}
+
+"""subscription root"""
+type subscription_root {
+  """
+  fetch data from the table: "auth.account_roles"
+  """
+  auth_account_roles(
+    """distinct select on columns"""
+    distinct_on: [auth_account_roles_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [auth_account_roles_order_by!]
+
+    """filter the rows returned"""
+    where: auth_account_roles_bool_exp
+  ): [auth_account_roles!]!
+
+  """
+  fetch data from the table: "auth.account_roles" using primary key columns
+  """
+  auth_account_roles_by_pk(id: uuid!): auth_account_roles
+
+  """
+  fetch data from the table: "auth.accounts"
+  """
+  auth_accounts(
+    """distinct select on columns"""
+    distinct_on: [auth_accounts_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [auth_accounts_order_by!]
+
+    """filter the rows returned"""
+    where: auth_accounts_bool_exp
+  ): [auth_accounts!]!
+
+  """fetch data from the table: "auth.accounts" using primary key columns"""
+  auth_accounts_by_pk(id: uuid!): auth_accounts
+
+  """
+  fetch data from the table: "auth.roles"
+  """
+  auth_roles(
+    """distinct select on columns"""
+    distinct_on: [auth_roles_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [auth_roles_order_by!]
+
+    """filter the rows returned"""
+    where: auth_roles_bool_exp
+  ): [auth_roles!]!
+
+  """fetch data from the table: "auth.roles" using primary key columns"""
+  auth_roles_by_pk(role: String!): auth_roles
+
+  """
+  fetch data from the table: "person"
+  """
+  person(
+    """distinct select on columns"""
+    distinct_on: [person_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [person_order_by!]
+
+    """filter the rows returned"""
+    where: person_bool_exp
+  ): [person!]!
+
+  """fetch data from the table: "person" using primary key columns"""
+  person_by_pk(person_id: uuid!): person
+
+  """
+  fetch data from the table: "users"
+  """
+  users(
+    """distinct select on columns"""
+    distinct_on: [users_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [users_order_by!]
+
+    """filter the rows returned"""
+    where: users_bool_exp
+  ): [users!]!
+
+  """fetch data from the table: "users" using primary key columns"""
+  users_by_pk(id: uuid!): users
+}
+
+scalar timestamptz
+
+"""
+expression to compare columns of type timestamptz. All fields are combined with logical 'AND'.
+"""
+input timestamptz_comparison_exp {
+  _eq: timestamptz
+  _gt: timestamptz
+  _gte: timestamptz
+  _in: [timestamptz!]
+  _is_null: Boolean
+  _lt: timestamptz
+  _lte: timestamptz
+  _neq: timestamptz
+  _nin: [timestamptz!]
+}
+
+"""
+columns and relationships of "users"
+"""
+type users {
+  """An object relationship"""
+  account: auth_accounts
+  avatar_url: String
+  created_at: timestamptz!
+  display_name: String
+  id: uuid!
+
+  """An array relationship"""
+  people(
+    """distinct select on columns"""
+    distinct_on: [person_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [person_order_by!]
+
+    """filter the rows returned"""
+    where: person_bool_exp
+  ): [person!]!
+  updated_at: timestamptz!
+}
+
+"""
+input type for inserting array relation for remote table "users"
+"""
+input users_arr_rel_insert_input {
+  data: [users_insert_input!]!
+  on_conflict: users_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "users". All fields are combined with a logical 'AND'.
+"""
+input users_bool_exp {
+  _and: [users_bool_exp]
+  _not: users_bool_exp
+  _or: [users_bool_exp]
+  account: auth_accounts_bool_exp
+  avatar_url: String_comparison_exp
+  created_at: timestamptz_comparison_exp
+  display_name: String_comparison_exp
+  id: uuid_comparison_exp
+  people: person_bool_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "users"
+"""
+enum users_constraint {
+  """unique or primary key constraint"""
+  users_pkey
+}
+
+"""
+input type for inserting data into table "users"
+"""
+input users_insert_input {
+  avatar_url: String
+  created_at: timestamptz
+  display_name: String
+  id: uuid
+  people: person_arr_rel_insert_input
+  updated_at: timestamptz
+}
+
+"""
+response of any mutation on the table "users"
+"""
+type users_mutation_response {
+  """number of affected rows by the mutation"""
+  affected_rows: Int!
+
+  """data of the affected rows by the mutation"""
+  returning: [users!]!
+}
+
+"""
+input type for inserting object relation for remote table "users"
+"""
+input users_obj_rel_insert_input {
+  data: users_insert_input!
+  on_conflict: users_on_conflict
+}
+
+"""
+on conflict condition type for table "users"
+"""
+input users_on_conflict {
+  constraint: users_constraint!
+  update_columns: [users_update_column!]!
+  where: users_bool_exp
+}
+
+"""
+ordering options when selecting data from "users"
+"""
+input users_order_by {
+  account: auth_accounts_order_by
+  avatar_url: order_by
+  created_at: order_by
+  display_name: order_by
+  id: order_by
+  updated_at: order_by
+}
+
+"""
+primary key columns input for table: "users"
+"""
+input users_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "users"
+"""
+enum users_select_column {
+  """column name"""
+  avatar_url
+
+  """column name"""
+  created_at
+
+  """column name"""
+  display_name
+
+  """column name"""
+  id
+
+  """column name"""
+  updated_at
+}
+
+"""
+input type for updating data in table "users"
+"""
+input users_set_input {
+  avatar_url: String
+  created_at: timestamptz
+  display_name: String
+  id: uuid
+  updated_at: timestamptz
+}
+
+"""
+update columns of table "users"
+"""
+enum users_update_column {
+  """column name"""
+  avatar_url
+
+  """column name"""
+  created_at
+
+  """column name"""
+  display_name
+
+  """column name"""
+  id
+
+  """column name"""
+  updated_at
+}
+
+scalar uuid
+
+"""
+expression to compare columns of type uuid. All fields are combined with logical 'AND'.
+"""
+input uuid_comparison_exp {
+  _eq: uuid
+  _gt: uuid
+  _gte: uuid
+  _in: [uuid!]
+  _is_null: Boolean
+  _lt: uuid
+  _lte: uuid
+  _neq: uuid
+  _nin: [uuid!]
+}
+

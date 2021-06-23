@@ -1,0 +1,97 @@
+# query Person {
+#   person {
+#     # ...fields
+#     first_name
+#     github_url
+#     is_verified
+#     last_name
+#     linkedin_url
+#     national_id_num
+#     person_id
+#     phone_number
+#     photo_id
+#     user {
+#       avatar_url
+#       display_name
+#       id
+#     }
+    # applications {
+    #   application_id
+    #   application_type
+    #   estimated_amount
+    #   amount_donated
+    # }
+#   }
+# }
+query person($person_id: uuid! = "") {
+  person_by_pk(person_id: $person_id) {
+    first_name
+    github_url
+    is_verified
+    last_name
+    linkedin_url
+    national_id_num
+    person_id
+    phone_number
+    photo_id
+    user {
+      avatar_url
+      display_name
+      id
+    }
+  }
+}
+
+mutation insert_person($first_name: String = "", $github_url: String = "", $is_verified: Boolean = false, $last_name: String = "", $linkedin_url: String = "", $national_id_num: String = "", $phone_number: String = "42", $photo_id: uuid = "{12345678-abcd-ef12–345a-12345678abcd}", $twitter_url: String = "", $user_id: uuid = "{12345678-abcd-ef12–345a-12345678abcd}") {
+  insert_person_one(object: {first_name: $first_name, github_url: $github_url, is_verified: $is_verified, last_name: $last_name, linkedin_url: $linkedin_url, national_id_num: $national_id_num, phone_number: $phone_number, photo_id: $photo_id, twitter_url: $twitter_url, user_id: $user_id}) {
+    first_name
+    github_url
+    is_verified
+    last_name
+    linkedin_url
+    national_id_num
+    person_id
+    phone_number
+    photo_id
+    user {
+      avatar_url
+      display_name
+      id
+    }
+  }
+}
+
+mutation delete_person($person_id: uuid! = "") {
+  delete_person_by_pk(person_id: $person_id) {
+    first_name
+    github_url
+    is_verified
+    last_name
+    linkedin_url
+    national_id_num
+    person_id
+    phone_number
+    photo_id
+    user {
+      avatar_url
+      display_name
+      id
+    }
+  }
+}
+fragment fields on person {
+    first_name
+    github_url
+    is_verified
+    last_name
+    linkedin_url
+    national_id_num
+    person_id
+    phone_number
+    photo_id
+    user {
+      avatar_url
+      display_name
+      id
+    }
+}
